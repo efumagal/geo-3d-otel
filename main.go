@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"math/rand"
 	"net/http"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -25,6 +26,10 @@ var tracer trace.Tracer
 func init() {
 	// Name the tracer after the package, or the service if you are in main
 	tracer = otel.Tracer("github.com/efumagal/geo-3d-otel")
+}
+
+func randFloat(min, max float64) float64 {
+	return rand.Float64()*(max-min) + min
 }
 
 func main() {
@@ -63,13 +68,13 @@ func main() {
 	app.Get("/distance", func(c *fiber.Ctx) error {
 		// Create a child span
 		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
-		start := geo.NewCoord3d(51.39674, -0.36148, 1104.9)
-		end := geo.NewCoord3d(51.38463, -0.36819, 1219.2)
+		start := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
+		end := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
 
 		// Distance in metres between two 3D coordinates
 		distance := geo.Distance3D(start, end)
 		childSpan.End()
-		
+
 		return c.JSON(map[string]any{"distance": distance})
 	})
 

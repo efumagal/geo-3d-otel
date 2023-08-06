@@ -12,7 +12,7 @@ export const options = {
   },
 };
 
-const BASE_URL = "http://localhost:8099/hello";
+const BASE_URL = "http://localhost:8099/distance";
 
 export default () => {
   check(http.get(BASE_URL), {
