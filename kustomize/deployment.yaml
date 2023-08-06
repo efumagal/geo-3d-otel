@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: geo-3d-oteld
-        image: ghcr.io/efumagal/geo-3d-otel:20230806-1009
+        image: ghcr.io/efumagal/geo-3d-otel:20230806-1013
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
