@@ -10,5 +10,5 @@ RUN go build -o otel_honeycomb ./main.go
 FROM alpine:latest AS runner
 WORKDIR /home/app
 COPY --from=builder /app/otel_honeycomb .
-EXPOSE 8099
+EXPOSE 8080
 ENTRYPOINT ["./otel_honeycomb"]

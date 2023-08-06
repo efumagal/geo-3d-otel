@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geo-3d-otel
+spec:
+  minReadySeconds: 3
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: geo-3d-otel
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
+      labels:
+        app: geo-3d-otel
+    spec:
+      containers:
+      - name: geo-3d-oteld
+        image: ghcr.io/efumagal/geo-3d-otel:20230806-1009
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: "GoGeo3D"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "https://api.honeycomb.io:443"
+        - name: HONEYCOMB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hc-credentials
+              key: token
+        - name: OTEL_EXPORTER_OTLP_HEADERS
+          value: "x-honeycomb-team=$(HONEYCOMB_TOKEN)"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 2
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 64Mi
