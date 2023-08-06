@@ -62,7 +62,7 @@ jobs:
         uses: snyk/actions/docker@master
         continue-on-error: true
         with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}{{date 'YYYYMMDD'}}-${{ env.VERSION_NUMBER }}
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
           args: --file=Dockerfile --severity-threshold=high --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
