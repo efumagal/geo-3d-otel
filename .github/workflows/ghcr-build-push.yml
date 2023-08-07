@@ -16,7 +16,7 @@ jobs:
     name: Push Docker image to GH registry
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       id-token: write
     steps:
