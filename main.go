@@ -78,6 +78,21 @@ func main() {
 		return c.JSON(map[string]any{"distance": distance})
 	})
 
+	app.Get("/cpu", func(c *fiber.Ctx) error {
+		// Create a child span
+		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
+
+		for i := 0; i < 1_000_000; i++ {
+			start := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
+			end := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
+			geo.Distance3D(start, end)
+		}
+
+		childSpan.End()
+
+		return c.SendStatus(http.StatusOK)
+	})
+
 	err = app.Listen("0.0.0.0:8080")
 	if err != nil {
 		log.Panic(err)

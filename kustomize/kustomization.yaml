@@ -4,3 +4,7 @@ resources:
   - hpa.yaml
   - deployment.yaml
   - service.yaml
+images:
+- name: "geo3d-image"
+  newName: "ghcr.io/efumagal/geo-3d-otel"
+  newTag: "20230806-1013"

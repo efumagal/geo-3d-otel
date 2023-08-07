@@ -66,3 +66,15 @@ jobs:
           args: --file=Dockerfile --severity-threshold=high --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Update Deployment Image Tag
+        working-directory: "kustomize"
+        run: |
+          kustomize edit set image geo3d-image=${{ steps.meta.outputs.tags }}
+
+      - name: "Push Updated Image Tag"
+        run: |
+          git config --global user.name "ci-bot"
+          git config --global user.email "ci-bot@users.noreply.github.com"
+          git commit -am "feat: Update deployment image tag to ${{ github.sha }}"
+          git push
