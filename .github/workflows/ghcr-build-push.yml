@@ -77,4 +77,5 @@ jobs:
           git config --global user.name "ci-bot"
           git config --global user.email "ci-bot@users.noreply.github.com"
           git commit -am "feat: Update deployment image tag to ${{ github.sha }}"
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
           git push
