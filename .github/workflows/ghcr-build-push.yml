@@ -71,6 +71,7 @@ jobs:
         working-directory: "kustomize"
         run: |
           kustomize edit set image geo3d-image=${{ steps.meta.outputs.tags }}
+          kustomize build
 
       - name: "Push Updated Image Tag"
         run: |
