@@ -10,4 +10,4 @@ spec:
     - name: http
       port: 8080
       protocol: TCP
-      targetPort: 8082
+      targetPort: http
