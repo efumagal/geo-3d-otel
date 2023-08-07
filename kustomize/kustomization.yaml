@@ -1,10 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: test-apps
 resources:
-- hpa.yaml
-- deployment.yaml
-- service.yaml
+  - hpa.yaml
+  - deployment.yaml
+  - service.yaml
+  - namespace.yaml
 images:
-- name: geo3d-image
-  newName: ghcr.io/efumagal/geo-3d-otel
-  newTag: 20230807-1026
+  - name: geo3d-image
+    newName: ghcr.io/efumagal/geo-3d-otel
+    newTag: 20230807-1025
