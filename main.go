@@ -79,7 +79,7 @@ func main() {
 		return c.JSON(map[string]any{"distance": distance})
 	})
 
-	app.Post("/action/cpu-load", func(c *fiber.Ctx) error {
+	app. Post("/action/cpu-load", func(c *fiber.Ctx) error {
 		// Create a child span
 		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
 
