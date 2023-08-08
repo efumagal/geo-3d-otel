@@ -12,6 +12,7 @@ When pushing to main the [Publish Docker image to GHCR](.github/workflows/ghcr-b
 - Scan the docker image using [Snyk](https://snyk.io)
 - Update [kustomization.yaml](kustomize/kustomization.yaml) with the newly generated Docker image
 
+In order to keep everything in one repo the K8S manifests are kept in (kustomize)[kustomize/] folder, unless using a monorepo they should probably be decoupled as the app code should be agnostic to the way is deployed.
 
 ## Run
 
