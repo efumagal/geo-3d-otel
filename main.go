@@ -61,13 +61,15 @@ func main() {
 		return c.SendStatus(http.StatusOK)
 	})
 
+	// Hello World HTML page
 	app.Get("/hello", func(c *fiber.Ctx) error {
 		c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
 		return c.SendString("<h1>Hello, World !</h1>")
 	})
 
+	// Simplified not to pass params and generates random 3D points
 	app.Get("/distance", func(c *fiber.Ctx) error {
-		// Create a child span
+		// Create a child span to show time taken just for the computation
 		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
 		start := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
 		end := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
@@ -79,6 +81,7 @@ func main() {
 		return c.JSON(map[string]any{"distance": distance})
 	})
 
+	// Just to simulate a more CPU intensive load
 	app.Post("/action/cpu-load", func(c *fiber.Ctx) error {
 		// Create a child span
 		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
