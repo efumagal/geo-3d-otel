@@ -7,7 +7,7 @@
 A simple HTTP client to serve APIs to calculate distance between 3D points.  
 Implemented using [Fiber](https://gofiber.io) and instrumented using [OpenTelemetry](https://opentelemetry.io).  
 
-When pushing on main the [Publish Docker image to GHCR](.github/workflows/ghcr-build-push.yml) is triggered this performs:  
+When pushing to main the [Publish Docker image to GHCR](.github/workflows/ghcr-build-push.yml) is triggered:  
 - Build the Docker image and push it to ghcr.io registry
 - Scan the docker image using [Snyk](https://snyk.io)
 - Update [kustomization.yaml](kustomize/kustomization.yaml) with the newly generated Docker image
