@@ -84,7 +84,7 @@ func main() {
 	// Just to simulate a more CPU intensive load
 	app.Post("/action/cpu-load", func(c *fiber.Ctx) error {
 		// Create a child span
-		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
+		_, childSpan := tracer.Start(c.UserContext(), "cpu_computation")
 
 		for i := 0; i < 1_000; i++ {
 			start := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
