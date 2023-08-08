@@ -13,6 +13,7 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
+// Used to initialise the global OpenTelemetry trace provider and exporter
 func InitializeGlobalTracerProvider(ctx context.Context) (*sdktrace.TracerProvider, *otlptrace.Exporter, error) {
 	// Configure a new OTLP exporter using environment variables for sending data to Honeycomb over gRPC
 	clientOTel := otlptracegrpc.NewClient()
