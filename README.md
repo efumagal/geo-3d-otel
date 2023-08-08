@@ -22,7 +22,7 @@ Similarly the files used by [Flux](https://fluxcd.io) are stored in [fluxCD](flu
 
 In this case there are 4 manifests:
 - [Deployment](kustomize/deployment.yaml) 
-Standard deployment with liveness/readiness, using a secret for the Honeycomb token. The secrets are added using [Sealed secrets](https://github.com/bitnami-labs/sealed-secrets)
+Standard deployment with liveness/readiness, using a secret for the Honeycomb token. The secrets are added using [Sealed secrets](https://github.com/bitnami-labs/sealed-secrets).
 - [Service](kustomize/service.yaml)
 - [HPA](kustomize/hpa.yaml)
 In order to scale out when needed, Average CPU > 80%, min 2, max 6 pods
@@ -31,6 +31,15 @@ In order to scale out when needed, Average CPU > 80%, min 2, max 6 pods
 ### Flux
 Flux is deployed on a local K8s cluster, and changes in the [kustomize](kustomize/) folder in this repo will trigger the reconciliation.  
 On a real project there may be different variants for each env (deployment, staging, production).
+
+## Observability
+
+The code is instrumented with [OpenTelemetry](https://opentelemetry.io) and in this particular example the traces and metrics are exported to [Honeycomb.io](https://www.honeycomb.io).  
+[Otel Fiber](https://github.com/gofiber/contrib/tree/main/otelfiber) is used for HTTP calls, plus there are some custom spans created to check specific operations.  
+
+Heatmap of HTTP calls during a load test:  
+
+Single trace:
 
 ## Run Locally
 
@@ -42,7 +51,7 @@ go run main.go
 
 Pre-requiste [K6](https://k6.io)
 
-[Load test K6 script](k6-load/load_distance.js)
+The script [Load test K6 script](k6-load/load_distance.js) can be used to generate some load and test performance and instrumentation.
 
 ```shell
 k6 run load_distance.js
@@ -50,11 +59,11 @@ k6 run load_distance.js
 
 ## TO DOs
 
-- For a real app consider structuring the Go code using DDD Hexagonal pattern
+- For a real app consider structuring the Go code using DDD/Hexagonal pattern
 - Run Docker build and push only on related code changes
 - Add unit tests and run them on PRs
 - Generate OpenAPI specs
 
 ## Notes
 
-- 
+- Before deploying on production thee will be probably be some functional/system tests
