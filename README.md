@@ -38,8 +38,10 @@ The code is instrumented with [OpenTelemetry](https://opentelemetry.io) and in t
 [Otel Fiber](https://github.com/gofiber/contrib/tree/main/otelfiber) is used for HTTP calls, plus there are some custom spans created to check specific operations.  
 
 Heatmap of HTTP calls during a load test:  
+![Heatmap](https://github.com/efumagal/geo-3d-otel/assets/77152760/69378de0-5dd6-41f1-8713-c3ab1c8212b9)
 
 Single trace:
+![Trace](https://github.com/efumagal/geo-3d-otel/assets/77152760/e8e33da7-26d0-4d93-971d-0a77d2fdbfd5)
 
 ## Run Locally
 
