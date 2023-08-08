@@ -7,14 +7,24 @@
 A simple HTTP client to serve APIs to calculate distance between 3D points.  
 Implemented using [Fiber](https://gofiber.io) and instrumented using [OpenTelemetry](https://opentelemetry.io).  
 
+## CI/CD
+
+### GitHub action
 When pushing to main the [Publish Docker image to GHCR](.github/workflows/ghcr-build-push.yml) is triggered:  
 - Build the Docker image and push it to ghcr.io registry
 - Scan the docker image using [Snyk](https://snyk.io)
 - Update [kustomization.yaml](kustomize/kustomization.yaml) with the newly generated Docker image
 
-In order to keep everything in one repo the K8S manifests are kept in (kustomize)[kustomize/] folder, unless using a monorepo they should probably be decoupled as the app code should be agnostic to the way is deployed.
+### K8s manifest Kustomize
+For this example I'm using [Kustomize](https://kustomize.io) to build the K8s manifest, this is different than what I'm currently doing on real projects where I use [Helm Charts](https://helm.sh/docs/topics/charts/).
+In order to keep everything in one repo the K8S manifests are kept in [kustomize](kustomize/) folder, unless using a monorepo they should probably be decoupled as the app code should be agnostic to the way is deployed. 
+Similarly the files used by [Flux](https://fluxcd.io) are stored in [fluxCD](fluxCD/).  
 
-## Run
+### Flux
+Flux is deployed on a local K8s cluster, and changes in the [kustomize](kustomize/) folder in this repo will trigger the reconciliation.  
+On a real project there may be different variants for each env (deployment, staging, production).
+
+## Run Locally
 
 ```shell
 go run main.go
@@ -33,6 +43,7 @@ k6 run load_distance.js
 ## TO DOs
 
 - For a real app consider structuring the Go code using DDD Hexagonal pattern
+- Run Docker build and push only on related code changes
 - Add unit tests and run them on PRs
 - Generate OpenAPI specs
 
