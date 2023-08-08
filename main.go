@@ -24,7 +24,6 @@ import (
 var tracer trace.Tracer
 
 func init() {
-	// Name the tracer after the package, or the service if you are in main
 	tracer = otel.Tracer("github.com/efumagal/geo-3d-otel")
 }
 
@@ -49,6 +48,7 @@ func main() {
 
 	app := fiber.New()
 
+	// Exclude instrumentation for /health 
 	app.Use(otelfiber.Middleware(otelfiber.WithNext(func(c *fiber.Ctx) bool {
 		return c.Path() == "/health"
 	})))
@@ -62,7 +62,8 @@ func main() {
 	})
 
 	app.Get("/hello", func(c *fiber.Ctx) error {
-		return c.SendStatus(http.StatusOK)
+		c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+		return c.SendString("<h1>Hello, World !</h1>")
 	})
 
 	app.Get("/distance", func(c *fiber.Ctx) error {
@@ -78,11 +79,11 @@ func main() {
 		return c.JSON(map[string]any{"distance": distance})
 	})
 
-	app.Get("/cpu", func(c *fiber.Ctx) error {
+	app.Post("/action/cpu-load", func(c *fiber.Ctx) error {
 		// Create a child span
 		_, childSpan := tracer.Start(c.UserContext(), "distance_computation")
 
-		for i := 0; i < 1_000_000; i++ {
+		for i := 0; i < 1_000; i++ {
 			start := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
 			end := geo.NewCoord3d(randFloat(-90, 90), randFloat(-180, 180), randFloat(0, 10000))
 			geo.Distance3D(start, end)

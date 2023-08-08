@@ -12,10 +12,10 @@ export const options = {
   },
 };
 
-const BASE_URL = "http://localhost:8080/cpu";
+const BASE_URL = "http://localhost:8080/action/cpu-load";
 
 export default () => {
-  check(http.get(BASE_URL), {
+  check(http.post(BASE_URL), {
     "status is 200": (r) => r.status == 200,
   });
 };
