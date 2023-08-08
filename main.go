@@ -48,7 +48,7 @@ func main() {
 
 	app := fiber.New()
 
-	// Exclude instrumentation for /health 
+	// Exclude instrumentation for /health
 	app.Use(otelfiber.Middleware(otelfiber.WithNext(func(c *fiber.Ctx) bool {
 		return c.Path() == "/health"
 	})))
