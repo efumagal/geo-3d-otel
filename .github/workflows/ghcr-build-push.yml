@@ -62,7 +62,7 @@ jobs:
     
       - name: Scan Docker image
         uses: snyk/actions/docker@master
-        continue-on-error: true
+        continue-on-error: false
         with:
           image: ${{ steps.meta.outputs.tags }}
           args: --file=Dockerfile --severity-threshold=high --sarif-file-output=snyk.sarif
