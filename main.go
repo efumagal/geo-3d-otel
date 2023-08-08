@@ -53,6 +53,7 @@ func main() {
 		return c.Path() == "/health"
 	})))
 
+	// Add Fiber middlewares
 	app.Use(recover.New())
 	app.Use(cors.New())
 	app.Use(compress.New())
