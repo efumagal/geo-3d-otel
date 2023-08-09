@@ -78,6 +78,7 @@ k6 run load_distance.js
 
 ## TO DOs
 
+- For this example the K8s cluster is a local one (provided by Docker Desktop) and FluxCD was deployed manually. With more time I could write a Terraform script to set up AWS EKS and bootstrap FluxCD.
 - For a real app consider structuring the Go code using DDD/Hexagonal pattern
 - Run Docker build and push only on related code changes
 - Add unit tests and run them on PRs
