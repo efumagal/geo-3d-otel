@@ -51,7 +51,7 @@ Single trace:
 go run main.go
 ```
 
-The webserv runs on port 8080.
+The webserver runs on port 8080.
 
 ### APIs
 
