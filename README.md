@@ -49,7 +49,22 @@ Single trace:
 go run main.go
 ```
 
-## Load test
+The webserv runs on port 8080.
+
+### APIs
+
+- **GET /health** Used for liveness/readiness probes
+- **GET /hello** Returns a hello World HTML page
+- **GET /distance** Calculates distance between two randomly generated 3D points
+- **POST /action/cpu-load** Used to generate some CPU load for testing HPA 
+
+[Geo3D.postman_collection](postman_collection/Geo3D.postman_collection) can be imported in [Postman](https://www.postman.com) to try the endpoints implemented.
+
+## Testing
+
+The Go code should have unit tests, this was not done for time constraints but it is a crucial part in guranteeing the correctness of the application.
+
+### Load test
 
 Pre-requiste [K6](https://k6.io)
 
@@ -64,8 +79,8 @@ k6 run load_distance.js
 - For a real app consider structuring the Go code using DDD/Hexagonal pattern
 - Run Docker build and push only on related code changes
 - Add unit tests and run them on PRs
-- Generate OpenAPI specs
+- In case of a real app use REST and generate OpenAPI specs
 
 ## Notes
 
-- Before deploying on production thee will be probably be some functional/system tests
+- Before deploying on production there will be probably be some functional/system automated tests
