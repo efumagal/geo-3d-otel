@@ -32,7 +32,7 @@ In order to scale out when needed, Average CPU > 80%, min 2, max 6 pods
 Flux is deployed on a local K8s cluster, and changes in the [kustomize](kustomize/) folder in this repo will trigger the reconciliation.  
 On a real project there may be different variants for each env (deployment, staging, production).  
 
-An example of a merge can be seen in [CICD Video Recording](CICD.md).
+An example of a merge can be seen in [CICD Video Recording](cicd.md).
 
 ## Observability
 
