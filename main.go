@@ -46,6 +46,17 @@ func main() {
 		log.Fatalf("failed to initialize OpenTelemetry: %e", err)
 	}
 
+	app := setupApp()
+
+	err = app.Listen("0.0.0.0:8080")
+	if err != nil {
+		log.Panic(err)
+	}
+}
+
+// setupApp creates and configures the Fiber app and routes. Extracted
+// to make the HTTP handlers testable without starting the server.
+func setupApp() *fiber.App {
 	app := fiber.New()
 
 	// Exclude instrumentation for /health
@@ -98,8 +109,5 @@ func main() {
 		return c.SendStatus(http.StatusOK)
 	})
 
-	err = app.Listen("0.0.0.0:8080")
-	if err != nil {
-		log.Panic(err)
-	}
+	return app
 }
