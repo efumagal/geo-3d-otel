@@ -9,4 +9,4 @@ resources:
 images:
 - name: geo3d-image
   newName: ghcr.io/efumagal/geo-3d-otel
-  newTag: 20230809-1038
+  newTag: 20260202-1039
